@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem, Button, FormGroup, Label, Input, Col, Row, FormFeedback } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
 import {Link} from 'react-router-dom';
-import { Control, Form, Errors, actions } from 'react-redux-form';
+import { Control, Form } from 'react-redux-form';
 
 class Contact extends Component {
 
     constructor(props) {
         super(props);
-
+        this.state = {
+            isModalOpen: false
+          };
+  
+        this.toggleModal = this.toggleModal.bind(this);    
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        alert('Thankyou for your feedback!' + JSON.stringify(values));
+        this.props.postFeedback(values.firstname, values.lastname, values.telnum, values.email, values.agree, values.contactType, values.message );
         this.props.resetFeedbackForm();
-        // event.preventDefault();
+    }
+
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
     }
 
     render() {
